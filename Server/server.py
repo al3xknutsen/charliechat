@@ -113,12 +113,12 @@ def register(dbfile, db, user, password, client, force=False):
         if not force:
             dbclose(dbfile)
             write_log(now(), user+" registered.")
-            sendmsg(client, "PROCEED")
+            sendmsg("PROCEED", client)
         return True
     else:
         # User already exists
         if not force:
-            sendmsg(client, "USER-ALREADY-EXISTS")
+            sendmsg("USER-ALREADY-EXISTS", client)
             client.close()
         return False
 
