@@ -102,3 +102,17 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+
+
+
+
+# Custom files
+Server/afks.txt
+Server/lastmsg.txt
+Server/logindata.db
+Server/roomaccess.txt
+Server/rooms.txt
+Server/avatars
+Server/contacts
+Server/settings
