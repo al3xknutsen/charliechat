@@ -4,6 +4,7 @@ from os.path import isdir, isfile, split
 import wx
 from wx.lib.imagebrowser import ImageDialog
 
+from core.file_manager import DIR_CREATE, FILE_WRITE
 from core.global_vars import appdata, host, port
 from core.graphics import IMG_RESIZE
 from core.network.connection import Connect
@@ -20,9 +21,7 @@ class PageAvatar(WizardPage, Connect, ErrorMsg):
         self.clientsocket = clientsocket
         self._maxsize()
 
-        WizardPage.__init__(self, "Avatar", "Here you can upload an image to use as avatar. \
-                            Others will be able to see your avatar when you're connected. \
-                            If you don't want an avatar, just ignore this window and press \"Finish\".")
+        WizardPage.__init__(self, "Avatar", "Here you can upload an image to use as avatar. Others will be able to see your avatar when you're connected. If you don't want an avatar, just ignore this window and press \"Finish\".")
 
     def _maxsize(self):
         '''Function for setting max size of images
@@ -127,9 +126,13 @@ class PageAvatar(WizardPage, Connect, ErrorMsg):
 
     def _save_avatar(self):
         '''Save avatar to file'''
+        DIR_CREATE(appdata + "avatars")
+
         bitmap = self.image.GetBitmap()
         if bitmap != wx.NullBitmap:
-            bitmap.SaveFile(appdata + "avatars\\" + self.username + ".png", wx.BITMAP_TYPE_PNG)
+            avatar_path = appdata + "avatars\\" + self.username + ".png"
+            FILE_WRITE(avatar_path, "")
+            bitmap.SaveFile(avatar_path, wx.BITMAP_TYPE_PNG)
 
     def start_chat(self):
         '''Starting main window'''
@@ -146,6 +149,7 @@ class PageAvatar(WizardPage, Connect, ErrorMsg):
             elif path.split(".")[-1].upper() not in self.formats:
                 self.SHOW_ERRORMSG("Unsupported file type!", self.pathinput)
             else:
+                print "Starting chat..."
                 self.start_chat()
         else:
             self.start_chat()
