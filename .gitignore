@@ -107,6 +107,9 @@ venv.bak/
 
 
 
+# PyCharm
+.idea
+
 # Custom files
 Server/afks.txt
 Server/lastmsg.txt
